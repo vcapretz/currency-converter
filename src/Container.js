@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { TouchableWithoutFeedback, Keyboard } from 'react-native';
 import styled from 'styled-components/native';
 
 const StyledContainer = styled.View`
@@ -10,7 +11,9 @@ const StyledContainer = styled.View`
 `;
 
 const Container = ({ children }) => (
-  <StyledContainer>{children}</StyledContainer>
+  <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+    <StyledContainer>{children}</StyledContainer>
+  </TouchableWithoutFeedback>
 );
 
 Container.propTypes = {

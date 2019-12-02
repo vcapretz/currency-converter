@@ -3,6 +3,7 @@ import { Dimensions, Image, StatusBar } from 'react-native';
 import styled from 'styled-components/native';
 
 import Container from './Container';
+import InputWithButton from './InputWithButton';
 
 const imageWidth = Dimensions.get('window').width / 2;
 
@@ -33,5 +34,7 @@ export default () => (
       />
     </ImageContainer>
     <HomeText>Currency Converter</HomeText>
+    <InputWithButton currency="BRL" onPress={() => ({})} />
+    <InputWithButton currency="SEK" editable={false} onPress={() => ({})} />
   </Container>
 );
