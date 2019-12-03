@@ -24,6 +24,10 @@ const HomeText = styled.Text`
   color: white;
 `;
 
+const StyledKeyboardAvoidingView = styled.KeyboardAvoidingView`
+  align-items: center;
+`;
+
 const today = new Date();
 
 export default () => (
@@ -32,27 +36,29 @@ export default () => (
 
     <Header onRightPress={() => ({})} />
 
-    <ImageContainer
-      resizeMode="contain"
-      source={require('./assets/background.png')}>
-      <Image
+    <StyledKeyboardAvoidingView behavior="padding">
+      <ImageContainer
         resizeMode="contain"
-        style={{ width: imageWidth / 2 }}
-        source={require('./assets/logo.png')}
+        source={require('./assets/background.png')}>
+        <Image
+          resizeMode="contain"
+          style={{ width: imageWidth / 2 }}
+          source={require('./assets/logo.png')}
+        />
+      </ImageContainer>
+      <HomeText>Currency Converter</HomeText>
+
+      <InputWithButton currency="BRL" onPress={() => ({})} />
+      <InputWithButton currency="SEK" editable={false} onPress={() => ({})} />
+
+      <LastConvertedText
+        fromCurrency="BRL"
+        toCurrency="SEK"
+        date={today}
+        conversionRate={2.26}
       />
-    </ImageContainer>
-    <HomeText>Currency Converter</HomeText>
 
-    <InputWithButton currency="BRL" onPress={() => ({})} />
-    <InputWithButton currency="SEK" editable={false} onPress={() => ({})} />
-
-    <LastConvertedText
-      fromCurrency="BRL"
-      toCurrency="SEK"
-      date={today}
-      conversionRate={2.26}
-    />
-
-    <ReverseCurrenciesButton text="Reverse currencies" onPress={() => ({})} />
+      <ReverseCurrenciesButton text="Reverse currencies" onPress={() => ({})} />
+    </StyledKeyboardAvoidingView>
   </Container>
 );
