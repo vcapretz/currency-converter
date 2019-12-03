@@ -6,6 +6,7 @@ import Container from './Container';
 import InputWithButton from './InputWithButton';
 import ReverseCurrenciesButton from './ReverseCurrenciesButton';
 import LastConvertedText from './LastConvertedText';
+import Header from './Header';
 
 const imageWidth = Dimensions.get('window').width / 2;
 
@@ -28,6 +29,8 @@ const today = new Date();
 export default () => (
   <Container>
     <StatusBar translucent={false} barStyle="light-content" />
+
+    <Header onRightPress={() => ({})} />
 
     <ImageContainer
       resizeMode="contain"
