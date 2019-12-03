@@ -4,6 +4,8 @@ import styled from 'styled-components/native';
 
 import Container from './Container';
 import InputWithButton from './InputWithButton';
+import ReverseCurrenciesButton from './ReverseCurrenciesButton';
+import LastConvertedText from './LastConvertedText';
 
 const imageWidth = Dimensions.get('window').width / 2;
 
@@ -21,9 +23,12 @@ const HomeText = styled.Text`
   color: white;
 `;
 
+const today = new Date();
+
 export default () => (
   <Container>
     <StatusBar translucent={false} barStyle="light-content" />
+
     <ImageContainer
       resizeMode="contain"
       source={require('./assets/background.png')}>
@@ -34,7 +39,17 @@ export default () => (
       />
     </ImageContainer>
     <HomeText>Currency Converter</HomeText>
+
     <InputWithButton currency="BRL" onPress={() => ({})} />
     <InputWithButton currency="SEK" editable={false} onPress={() => ({})} />
+
+    <LastConvertedText
+      fromCurrency="BRL"
+      toCurrency="SEK"
+      date={today}
+      conversionRate={2.26}
+    />
+
+    <ReverseCurrenciesButton text="Reverse currencies" onPress={() => ({})} />
   </Container>
 );
