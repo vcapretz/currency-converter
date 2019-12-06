@@ -26,7 +26,10 @@ const StyledText = styled.Text`
 const ReverseCurrenciesButton = ({ text, onPress }) => (
   <TouchableContainer onPress={onPress}>
     <ButtonContainer>
-      <StyledImage resizeMode="contain" source={require('./assets/icon.png')} />
+      <StyledImage
+        resizeMode="contain"
+        source={require('../assets/icon.png')}
+      />
       <StyledText>{text}</StyledText>
     </ButtonContainer>
   </TouchableContainer>

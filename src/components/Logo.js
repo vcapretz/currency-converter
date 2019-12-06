@@ -78,11 +78,11 @@ const Logo = () => {
       <ImageContainer
         style={{ width: imageContainerWidth, height: imageContainerWidth }}
         resizeMode="contain"
-        source={require('./assets/background.png')}>
+        source={require('../assets/background.png')}>
         <Animated.Image
           style={{ width: imageWidth }}
           resizeMode="contain"
-          source={require('./assets/logo.png')}
+          source={require('../assets/logo.png')}
         />
       </ImageContainer>
       <HomeText>Currency Converter</HomeText>

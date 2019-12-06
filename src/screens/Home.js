@@ -2,12 +2,12 @@ import React from 'react';
 import { StatusBar, Platform } from 'react-native';
 import styled from 'styled-components/native';
 
-import Container from './Container';
-import InputWithButton from './InputWithButton';
-import ReverseCurrenciesButton from './ReverseCurrenciesButton';
-import LastConvertedText from './LastConvertedText';
-import Header from './Header';
-import Logo from './Logo';
+import Container from '../components/Container';
+import InputWithButton from '../components/InputWithButton';
+import ReverseCurrenciesButton from '../components/ReverseCurrenciesButton';
+import LastConvertedText from '../components/LastConvertedText';
+import Header from '../components/Header';
+import Logo from '../components/Logo';
 
 const StyledKeyboardAvoidingView = styled.KeyboardAvoidingView`
   align-items: center;

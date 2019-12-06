@@ -1,19 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  FlatList,
-  Image,
-  StatusBar,
-  TouchableHighlight,
-  StyleSheet,
-} from 'react-native';
+import { TouchableHighlight } from 'react-native';
 import styled from 'styled-components/native';
-
-import currencies from './data/currencyList';
-
-const StyledSafeAreaView = styled.SafeAreaView`
-  flex: 1;
-`;
 
 const StyledListItemContainer = styled.View`
   padding-horizontal: 20;
@@ -27,12 +15,6 @@ const StyledListItemContainer = styled.View`
 const StyledListItemText = styled.Text`
   font-size: 16;
   color: #343434;
-`;
-
-const StyledSeparator = styled.View`
-  height: ${StyleSheet.hairlineWidth};
-  margin-left: 20;
-  background-color: #e2e2e2;
 `;
 
 const StyledIcon = styled.View`
@@ -52,7 +34,7 @@ const Icon = ({ visible, checkmark }) => (
     {checkmark && (
       <StyledIconImage
         resizeMode="contain"
-        source={require('./assets/check.png')}
+        source={require('../assets/check.png')}
       />
     )}
   </StyledIcon>
@@ -64,11 +46,17 @@ const ListItem = ({
   checkmark = true,
   visible = true,
   onPress,
+  customIcon = null,
 }) => (
   <TouchableHighlight onPress={onPress} underlayColor="#343434">
     <StyledListItemContainer>
       <StyledListItemText>{text}</StyledListItemText>
-      {selected ? <Icon visible={visible} checkmark={checkmark} /> : <Icon />}
+      {!customIcon && selected ? (
+        <Icon visible={visible} checkmark={checkmark} />
+      ) : (
+        <Icon />
+      )}
+      {customIcon}
     </StyledListItemContainer>
   </TouchableHighlight>
 );
@@ -77,18 +65,7 @@ ListItem.propTypes = {
   text: PropTypes.string.isRequired,
   selected: PropTypes.bool,
   onPress: PropTypes.func.isRequired,
+  customIcon: PropTypes.element,
 };
 
-export default () => (
-  <StyledSafeAreaView>
-    <StatusBar translucent={false} barStyle="dark-content" />
-    <FlatList
-      data={currencies}
-      keyExtractor={item => item}
-      ItemSeparatorComponent={StyledSeparator}
-      renderItem={({ item }) => (
-        <ListItem text={item} selected={item === 'BRL'} onPress={() => ({})} />
-      )}
-    />
-  </StyledSafeAreaView>
-);
+export default ListItem;

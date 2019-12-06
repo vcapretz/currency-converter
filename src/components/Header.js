@@ -22,7 +22,7 @@ const StyledIcon = styled.Image`
 const Header = ({ onRightPress }) => (
   <StyledHeaderContainer>
     <StyledSettingsButton onPress={onRightPress}>
-      <StyledIcon resizeMode="contain" source={require('./assets/gear.png')} />
+      <StyledIcon resizeMode="contain" source={require('../assets/gear.png')} />
     </StyledSettingsButton>
   </StyledHeaderContainer>
 );
