@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, Platform } from 'react-native';
+import { ScrollView, Platform, StatusBar } from 'react-native';
 import styled from 'styled-components/native';
 import ListItem from '../components/ListItem';
 import Separator from '../components/Separator';
@@ -15,11 +15,12 @@ const ICON_SIZE = 23;
 
 export default () => (
   <StyledSafeAreaView>
+    <StatusBar translucent={false} barStyle="dark-content" />
     <ScrollView>
       <ListItem
         text="Themes"
         onPress={() => ({})}
-        customIcon={
+        icon={
           <Icon
             name={`${platformPrefix[Platform.OS]}-arrow-forward`}
             color={ICON_COLOR}
@@ -32,7 +33,7 @@ export default () => (
       <ListItem
         text="Fixer.io"
         onPress={() => ({})}
-        customIcon={
+        icon={
           <Icon
             name={`${platformPrefix[Platform.OS]}-link`}
             color={ICON_COLOR}

@@ -17,46 +17,12 @@ const StyledListItemText = styled.Text`
   color: #343434;
 `;
 
-const StyledIcon = styled.View`
-  width: 30;
-  height: 30;
-  border-radius: 15;
-  background-color: ${({ visible }) => (visible ? '#4f6d7a' : 'transparent')};
-  align-items: center;
-  justify-content: center;
-`;
-
-const StyledIconImage = styled.Image`
-  width: 18;
-`;
-const Icon = ({ visible, checkmark }) => (
-  <StyledIcon visible={visible}>
-    {checkmark && (
-      <StyledIconImage
-        resizeMode="contain"
-        source={require('../assets/check.png')}
-      />
-    )}
-  </StyledIcon>
-);
-
-const ListItem = ({
-  text,
-  selected = false,
-  checkmark = true,
-  visible = true,
-  onPress,
-  customIcon = null,
-}) => (
+const ListItem = ({ text, onPress, icon = null }) => (
   <TouchableHighlight onPress={onPress} underlayColor="#343434">
     <StyledListItemContainer>
       <StyledListItemText>{text}</StyledListItemText>
-      {!customIcon && selected ? (
-        <Icon visible={visible} checkmark={checkmark} />
-      ) : (
-        <Icon />
-      )}
-      {customIcon}
+
+      {icon}
     </StyledListItemContainer>
   </TouchableHighlight>
 );
