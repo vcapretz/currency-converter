@@ -16,7 +16,7 @@ const StyledKeyboardAvoidingView = styled.KeyboardAvoidingView`
 
 const today = new Date();
 
-export default () => {
+export default ({ componentId }) => {
   const navigateToCurrencyList = modalTitle => () => {
     Navigation.showModal({
       stack: {
@@ -38,11 +38,26 @@ export default () => {
     });
   };
 
+  const navigateToOptions = () => {
+    Navigation.push(componentId, {
+      component: {
+        name: 'navigation.Options',
+        options: {
+          topBar: {
+            title: {
+              text: 'Options',
+            },
+          },
+        },
+      },
+    });
+  };
+
   return (
     <Container>
-      <StatusBar backgroundColor="blue" barStyle="light-content" />
+      <StatusBar barStyle="light-content" />
 
-      <Header onRightPress={() => ({})} />
+      <Header onRightPress={navigateToOptions} />
 
       <StyledKeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : null}>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { ScrollView, StatusBar } from 'react-native';
+import { Navigation } from 'react-native-navigation';
 import styled from 'styled-components/native';
 import ListItem from '../components/ListItem';
 import Separator from '../components/Separator';
@@ -14,36 +15,42 @@ const primaryOrange = '#d57a66';
 const primaryGreen = '#00bd9d';
 const primaryPurple = '#9e768f';
 
-export default () => (
-  <StyledSafeAreaView>
-    <StatusBar translucent={false} barStyle="dark-content" />
-    <ScrollView>
-      <ListItem
-        text="Blue"
-        onPress={() => ({})}
-        icon={<CheckIcon color={primaryBlue} checkmark={false} />}
-      />
-      <Separator />
+export default ({ componentId }) => {
+  const navigateBackToOptions = () => {
+    Navigation.pop(componentId);
+  };
 
-      <ListItem
-        text="Orange"
-        onPress={() => ({})}
-        icon={<CheckIcon color={primaryOrange} checkmark={false} />}
-      />
-      <Separator />
+  return (
+    <StyledSafeAreaView>
+      <StatusBar translucent={false} barStyle="dark-content" />
+      <ScrollView>
+        <ListItem
+          text="Blue"
+          onPress={navigateBackToOptions}
+          icon={<CheckIcon color={primaryBlue} checkmark={false} />}
+        />
+        <Separator />
 
-      <ListItem
-        text="Green"
-        onPress={() => ({})}
-        icon={<CheckIcon color={primaryGreen} checkmark={false} />}
-      />
-      <Separator />
+        <ListItem
+          text="Orange"
+          onPress={navigateBackToOptions}
+          icon={<CheckIcon color={primaryOrange} checkmark={false} />}
+        />
+        <Separator />
 
-      <ListItem
-        text="Purple"
-        onPress={() => ({})}
-        icon={<CheckIcon color={primaryPurple} checkmark={false} />}
-      />
-    </ScrollView>
-  </StyledSafeAreaView>
-);
+        <ListItem
+          text="Green"
+          onPress={navigateBackToOptions}
+          icon={<CheckIcon color={primaryGreen} checkmark={false} />}
+        />
+        <Separator />
+
+        <ListItem
+          text="Purple"
+          onPress={navigateBackToOptions}
+          icon={<CheckIcon color={primaryPurple} checkmark={false} />}
+        />
+      </ScrollView>
+    </StyledSafeAreaView>
+  );
+};
