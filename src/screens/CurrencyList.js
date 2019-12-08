@@ -1,5 +1,6 @@
 import React from 'react';
 import { FlatList, StatusBar } from 'react-native';
+import { Navigation } from 'react-native-navigation';
 import styled from 'styled-components/native';
 
 import ListItem from '../components/ListItem';
@@ -11,9 +12,9 @@ const StyledSafeAreaView = styled.SafeAreaView`
   flex: 1;
 `;
 
-export default () => (
+export default ({ componentId }) => (
   <StyledSafeAreaView>
-    <StatusBar translucent={false} barStyle="dark-content" />
+    <StatusBar translucent={false} barStyle="light-content" />
     <FlatList
       data={currencies}
       keyExtractor={item => item}
@@ -21,7 +22,7 @@ export default () => (
       renderItem={({ item }) => (
         <ListItem
           text={item}
-          onPress={() => ({})}
+          onPress={() => Navigation.dismissModal(componentId)}
           icon={
             <CheckIcon
               color={item === 'BRL' ? '#4f6d7a' : 'transparent'}
