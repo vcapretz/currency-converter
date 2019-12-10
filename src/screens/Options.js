@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, Platform, StatusBar, Linking } from 'react-native';
+import { ScrollView, Platform, StatusBar, Linking, Alert } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import styled from 'styled-components/native';
 import ListItem from '../components/ListItem';
@@ -34,7 +34,7 @@ export default ({ componentId }) => {
     try {
       await Linking.openURL('https://google.com');
     } catch (error) {
-      alert('Error when opening link');
+      Alert.alert('Error', 'Could not open link');
     }
   };
 
