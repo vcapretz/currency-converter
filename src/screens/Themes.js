@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StatusBar } from 'react-native';
+import { ScrollView } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import styled from 'styled-components/native';
 import ListItem from '../components/ListItem';
@@ -22,7 +22,6 @@ export default ({ componentId }) => {
 
   return (
     <StyledSafeAreaView>
-      <StatusBar translucent={false} barStyle="dark-content" />
       <ScrollView>
         <ListItem
           text="Blue"

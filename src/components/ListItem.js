@@ -14,7 +14,7 @@ const StyledListItemContainer = styled.View`
 
 const StyledListItemText = styled.Text`
   font-size: 16;
-  color: #343434;
+  color: black;
 `;
 
 const ListItem = ({ text, onPress, icon = null }) => (

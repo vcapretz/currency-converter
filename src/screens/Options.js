@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, Platform, StatusBar, Linking, Alert } from 'react-native';
+import { ScrollView, Platform, Linking, Alert } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import styled from 'styled-components/native';
 import ListItem from '../components/ListItem';
@@ -40,7 +40,6 @@ export default ({ componentId }) => {
 
   return (
     <StyledSafeAreaView>
-      <StatusBar translucent={false} barStyle="dark-content" />
       <ScrollView>
         <ListItem
           text="Themes"

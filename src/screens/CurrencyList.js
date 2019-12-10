@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, StatusBar } from 'react-native';
+import { FlatList } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import styled from 'styled-components/native';
 
@@ -14,7 +14,6 @@ const StyledSafeAreaView = styled.SafeAreaView`
 
 export default ({ componentId }) => (
   <StyledSafeAreaView>
-    <StatusBar translucent={false} barStyle="light-content" />
     <FlatList
       data={currencies}
       keyExtractor={item => item}

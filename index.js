@@ -1,7 +1,3 @@
-/**
- * @format
- */
-
 import { Navigation } from 'react-native-navigation';
 import Home from './src/screens/Home';
 import CurrencyList from './src/screens/CurrencyList';
@@ -14,6 +10,24 @@ Navigation.registerComponent('navigation.Options', () => Options);
 Navigation.registerComponent('navigation.Themes', () => Themes);
 
 Navigation.events().registerAppLaunchedListener(() => {
+  Navigation.setDefaultOptions({
+    statusBar: {
+      style: 'light',
+    },
+    // TODO 👇
+    // layout: {
+    //   backgroundColor: 'black',
+    // },
+    topBar: {
+      background: {
+        color: 'white',
+      },
+      title: {
+        color: 'black',
+      },
+    },
+  });
+
   Navigation.setRoot({
     root: {
       stack: {

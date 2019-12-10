@@ -41,6 +41,11 @@ export default ({ componentId }) => {
             {
               component: {
                 name: 'navigation.CurrencyList',
+                // passProps: {
+                //   onSelectCurrencyPress: item => {
+                //     setBaseCurrency(item);
+                //   },
+                // },
                 options: {
                   topBar: {
                     title: {
@@ -73,8 +78,8 @@ export default ({ componentId }) => {
   };
 
   return (
-    <StyledContainer>
-      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <StyledContainer>
         <StatusBar barStyle="light-content" />
 
         <Header onRightPress={navigateToOptions} />
@@ -105,7 +110,7 @@ export default ({ componentId }) => {
             onPress={() => ({})}
           />
         </StyledKeyboardAvoidingView>
-      </TouchableWithoutFeedback>
-    </StyledContainer>
+      </StyledContainer>
+    </TouchableWithoutFeedback>
   );
 };
