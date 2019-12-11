@@ -42,13 +42,24 @@ const StyledTextInput = styled.TextInput`
   color: #797979;
 `;
 
-const InputWithButton = ({ currency, editable = true, onPress }) => (
+const InputWithButton = ({
+  currency,
+  editable = true,
+  onChangeText,
+  onPress,
+  value,
+}) => (
   <InputContainer editable={editable}>
     <ButtonContainer underlayColor="#b3b3b3" onPress={onPress}>
       <ButtonText>{currency}</ButtonText>
     </ButtonContainer>
 
-    <StyledTextInput editable={editable} keyboardType="decimal-pad" />
+    <StyledTextInput
+      editable={editable}
+      keyboardType="decimal-pad"
+      onChangeText={onChangeText}
+      value={value}
+    />
   </InputContainer>
 );
 
@@ -56,6 +67,7 @@ InputWithButton.propTypes = {
   currency: PropTypes.string.isRequired,
   editable: PropTypes.bool,
   onPress: PropTypes.func.isRequired,
+  onChangeText: PropTypes.func,
 };
 
 export default InputWithButton;

@@ -3,8 +3,9 @@ import Home from './src/screens/Home';
 import CurrencyList from './src/screens/CurrencyList';
 import Options from './src/screens/Options';
 import Themes from './src/screens/Themes';
+import { hoc } from './src/AppProvider';
 
-Navigation.registerComponent('navigation.Home', () => Home);
+Navigation.registerComponent('navigation.Home', () => hoc(Home));
 Navigation.registerComponent('navigation.CurrencyList', () => CurrencyList);
 Navigation.registerComponent('navigation.Options', () => Options);
 Navigation.registerComponent('navigation.Themes', () => Themes);

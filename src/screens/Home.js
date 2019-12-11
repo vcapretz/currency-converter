@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React from 'react';
 import {
   StatusBar,
   Platform,
@@ -7,12 +7,16 @@ import {
 } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import styled from 'styled-components/native';
+import { prop, pathOr } from 'ramda';
 
 import InputWithButton from '../components/InputWithButton';
 import ReverseCurrenciesButton from '../components/ReverseCurrenciesButton';
 import LastConvertedText from '../components/LastConvertedText';
 import Header from '../components/Header';
 import Logo from '../components/Logo';
+
+import { currenciesSlice } from '../slices';
+import { useSelector, useDispatch } from 'react-redux';
 
 const StyledContainer = styled.View`
   flex: 1;
@@ -25,42 +29,55 @@ const StyledKeyboardAvoidingView = styled.KeyboardAvoidingView`
   align-items: center;
 `;
 
-const today = new Date();
-const defaultBaseCurrency = 'BRL';
-const defaultQuoteCurrency = 'SEK';
-
 export default ({ componentId }) => {
-  const [baseCurrency, setBaseCurrency] = useState(defaultBaseCurrency);
-  const [quoteCurrency, setQuoteCurrency] = useState(defaultQuoteCurrency);
+  const dispatch = useDispatch();
 
-  const navigateToCurrencyList = useCallback(
-    modalTitle => () => {
-      Navigation.showModal({
-        stack: {
-          children: [
-            {
-              component: {
-                name: 'navigation.CurrencyList',
-                // passProps: {
-                //   onSelectCurrencyPress: item => {
-                //     setBaseCurrency(item);
-                //   },
-                // },
-                options: {
-                  topBar: {
-                    title: {
-                      text: modalTitle,
-                    },
+  const baseCurrency = useSelector(prop('baseCurrency'));
+  const quoteCurrency = useSelector(prop('quoteCurrency'));
+  const amount = useSelector(prop('amount'));
+  const conversion = useSelector(state => {
+    const conversionRate = pathOr(
+      0,
+      ['conversions', state.baseCurrency, 'rates', state.quoteCurrency],
+      state,
+    );
+
+    const date = pathOr(null, ['conversions', baseCurrency, 'date'], state);
+    const lastConvertedDate = date ? new Date(date) : new Date();
+
+    const isLoading = pathOr(
+      false,
+      ['conversions', state.baseCurrency, 'isFetching'],
+      state,
+    );
+
+    return { lastConvertedDate, conversionRate, isLoading };
+  });
+
+  const { conversionRate, lastConvertedDate } = conversion;
+  const convertedAmount = conversionRate * amount;
+  const { changeCurrencyAmount, swapCurrency } = currenciesSlice.actions;
+
+  const navigateToCurrencyList = modalTitle => () => {
+    Navigation.showModal({
+      stack: {
+        children: [
+          {
+            component: {
+              name: 'navigation.CurrencyList',
+              options: {
+                topBar: {
+                  title: {
+                    text: modalTitle,
                   },
                 },
               },
             },
-          ],
-        },
-      });
-    },
-    [],
-  );
+          },
+        ],
+      },
+    });
+  };
 
   const navigateToOptions = () => {
     Navigation.push(componentId, {
@@ -90,24 +107,27 @@ export default ({ componentId }) => {
 
           <InputWithButton
             currency={baseCurrency}
+            onChangeText={text => dispatch(changeCurrencyAmount(text))}
             onPress={navigateToCurrencyList('Base currency')}
+            value={amount.toString()}
           />
           <InputWithButton
             currency={quoteCurrency}
             editable={false}
             onPress={navigateToCurrencyList('Quote currency')}
+            value={convertedAmount.toFixed(2)}
           />
 
           <LastConvertedText
+            conversionRate={conversionRate}
+            date={lastConvertedDate}
             fromCurrency={baseCurrency}
             toCurrency={quoteCurrency}
-            date={today}
-            conversionRate={2.26}
           />
 
           <ReverseCurrenciesButton
             text="Reverse currencies"
-            onPress={() => ({})}
+            onPress={() => dispatch(swapCurrency())}
           />
         </StyledKeyboardAvoidingView>
       </StyledContainer>
