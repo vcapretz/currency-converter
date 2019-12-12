@@ -20,6 +20,9 @@ export default ({ componentId }) => {
       component: {
         name: 'navigation.Themes',
         options: {
+          statusBar: {
+            style: 'dark',
+          },
           topBar: {
             title: {
               text: 'Themes',

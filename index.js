@@ -14,12 +14,13 @@ Navigation.events().registerAppLaunchedListener(() => {
   Navigation.setDefaultOptions({
     statusBar: {
       style: 'light',
+      visible: true,
     },
-    // TODO 👇
-    // layout: {
-    //   backgroundColor: 'black',
-    // },
+    layout: {
+      backgroundColor: 'white',
+    },
     topBar: {
+      drawBehind: true,
       background: {
         color: 'white',
       },
@@ -33,26 +34,6 @@ Navigation.events().registerAppLaunchedListener(() => {
     root: {
       stack: {
         children: [
-          {
-            component: {
-              name: 'navigation.Themes',
-              options: {
-                topBar: {
-                  visible: false,
-                },
-              },
-            },
-          },
-          {
-            component: {
-              name: 'navigation.Options',
-              options: {
-                topBar: {
-                  visible: false,
-                },
-              },
-            },
-          },
           {
             component: {
               name: 'navigation.Home',

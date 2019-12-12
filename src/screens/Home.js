@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  StatusBar,
-  Platform,
-  TouchableWithoutFeedback,
-  Keyboard,
-} from 'react-native';
+import { Platform, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import styled from 'styled-components/native';
 import { prop, pathOr } from 'ramda';
@@ -84,6 +79,9 @@ export default ({ componentId }) => {
       component: {
         name: 'navigation.Options',
         options: {
+          statusBar: {
+            style: 'dark',
+          },
           topBar: {
             title: {
               text: 'Options',
@@ -97,8 +95,6 @@ export default ({ componentId }) => {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <StyledContainer>
-        <StatusBar barStyle="light-content" />
-
         <Header onRightPress={navigateToOptions} />
 
         <StyledKeyboardAvoidingView
