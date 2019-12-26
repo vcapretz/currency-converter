@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Dimensions, Animated, Keyboard, Platform } from 'react-native';
 import styled from 'styled-components/native';
+import { path } from 'ramda';
+import { useSelector } from 'react-redux';
 
 const largeImageContainerWidth = Dimensions.get('window').width / 2;
 const largeImageWidth = largeImageContainerWidth / 2;
@@ -27,6 +29,8 @@ const Logo = () => {
     new Animated.Value(largeImageContainerWidth),
   );
   const [imageWidth] = useState(new Animated.Value(largeImageWidth));
+
+  const primaryColor = useSelector(path(['theme', 'primaryColor']));
 
   useEffect(() => {
     const keyboardWillShow = () => {
@@ -80,7 +84,7 @@ const Logo = () => {
         resizeMode="contain"
         source={require('../assets/background.png')}>
         <Animated.Image
-          style={{ width: imageWidth }}
+          style={{ width: imageWidth, tintColor: primaryColor }}
           resizeMode="contain"
           source={require('../assets/logo.png')}
         />

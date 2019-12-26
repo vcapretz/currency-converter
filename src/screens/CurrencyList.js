@@ -2,7 +2,7 @@ import React from 'react';
 import { FlatList } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import styled from 'styled-components/native';
-import { prop } from 'ramda';
+import { path } from 'ramda';
 
 import ListItem from '../components/ListItem';
 import Separator from '../components/Separator';
@@ -18,9 +18,12 @@ const StyledSafeAreaView = styled.SafeAreaView`
 
 export default ({ componentId, modalType }) => {
   const dispatch = useDispatch();
-  const { setCurrency } = currenciesSlice.actions;
-  const selectedCurrency = useSelector(prop(modalType));
 
+  const primaryColor = useSelector(path(['theme', 'primaryColor']));
+
+  const selectedCurrency = useSelector(path(['currencies', modalType]));
+
+  const { setCurrency } = currenciesSlice.actions;
   return (
     <StyledSafeAreaView>
       <FlatList
@@ -39,7 +42,7 @@ export default ({ componentId, modalType }) => {
             }}
             icon={
               <CheckIcon
-                color={item === selectedCurrency ? '#4f6d7a' : 'transparent'}
+                color={item === selectedCurrency ? primaryColor : 'transparent'}
                 checkmark={item === selectedCurrency}
               />
             }

@@ -10,7 +10,7 @@ Navigation.registerComponent('navigation.CurrencyList', () =>
   hoc(CurrencyList),
 );
 Navigation.registerComponent('navigation.Options', () => Options);
-Navigation.registerComponent('navigation.Themes', () => Themes);
+Navigation.registerComponent('navigation.Themes', () => hoc(Themes));
 
 Navigation.events().registerAppLaunchedListener(() => {
   Navigation.setDefaultOptions({

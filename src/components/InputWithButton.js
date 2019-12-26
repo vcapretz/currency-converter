@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components/native';
 import { StyleSheet } from 'react-native';
 
+import { useSelector } from 'react-redux';
+import { path } from 'ramda';
+
 const INPUT_HEIGHT = 48;
 const BORDER_RADIUS = 4;
 
@@ -28,7 +31,7 @@ const ButtonContainer = styled.TouchableHighlight`
 `;
 
 const ButtonText = styled.Text`
-  color: #4f6d7a;
+  color: ${props => props.primaryColor};
   padding-horizontal: 16;
   font-weight: 600;
   font-size: 20;
@@ -48,20 +51,24 @@ const InputWithButton = ({
   onChangeText,
   onPress,
   value,
-}) => (
-  <InputContainer editable={editable}>
-    <ButtonContainer underlayColor="#b3b3b3" onPress={onPress}>
-      <ButtonText>{currency}</ButtonText>
-    </ButtonContainer>
+}) => {
+  const primaryColor = useSelector(path(['theme', 'primaryColor']));
 
-    <StyledTextInput
-      editable={editable}
-      keyboardType="decimal-pad"
-      onChangeText={onChangeText}
-      value={value}
-    />
-  </InputContainer>
-);
+  return (
+    <InputContainer editable={editable}>
+      <ButtonContainer underlayColor="#b3b3b3" onPress={onPress}>
+        <ButtonText primaryColor={primaryColor}>{currency}</ButtonText>
+      </ButtonContainer>
+
+      <StyledTextInput
+        editable={editable}
+        keyboardType="decimal-pad"
+        onChangeText={onChangeText}
+        value={value}
+      />
+    </InputContainer>
+  );
+};
 
 InputWithButton.propTypes = {
   currency: PropTypes.string.isRequired,

@@ -5,6 +5,8 @@ import styled from 'styled-components/native';
 import ListItem from '../components/ListItem';
 import Separator from '../components/Separator';
 import CheckIcon from '../components/CheckIcon';
+import { themeSlice } from '../slices';
+import { useDispatch } from 'react-redux';
 
 const StyledSafeAreaView = styled.SafeAreaView`
   flex: 1;
@@ -16,7 +18,12 @@ const primaryGreen = '#00bd9d';
 const primaryPurple = '#9e768f';
 
 export default ({ componentId }) => {
-  const navigateBackToOptions = () => {
+  const dispatch = useDispatch();
+  const { changePrimaryColor } = themeSlice.actions;
+
+  const handlePressColor = color => {
+    dispatch(changePrimaryColor(color));
+
     Navigation.pop(componentId);
   };
 
@@ -25,28 +32,28 @@ export default ({ componentId }) => {
       <ScrollView>
         <ListItem
           text="Blue"
-          onPress={navigateBackToOptions}
+          onPress={() => handlePressColor(primaryBlue)}
           icon={<CheckIcon color={primaryBlue} checkmark={false} />}
         />
         <Separator />
 
         <ListItem
           text="Orange"
-          onPress={navigateBackToOptions}
+          onPress={() => handlePressColor(primaryOrange)}
           icon={<CheckIcon color={primaryOrange} checkmark={false} />}
         />
         <Separator />
 
         <ListItem
           text="Green"
-          onPress={navigateBackToOptions}
+          onPress={() => handlePressColor(primaryGreen)}
           icon={<CheckIcon color={primaryGreen} checkmark={false} />}
         />
         <Separator />
 
         <ListItem
           text="Purple"
-          onPress={navigateBackToOptions}
+          onPress={() => handlePressColor(primaryPurple)}
           icon={<CheckIcon color={primaryPurple} checkmark={false} />}
         />
       </ScrollView>

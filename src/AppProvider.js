@@ -1,11 +1,14 @@
 import React from 'react';
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 
-import { currenciesSlice } from './slices';
+import { currenciesSlice, themeSlice } from './slices';
 
 const store = configureStore({
-  reducer: currenciesSlice.reducer,
+  reducer: combineReducers({
+    currencies: currenciesSlice.reducer,
+    theme: themeSlice.reducer,
+  }),
 });
 
 export const AppProvider = ({ children }) => (

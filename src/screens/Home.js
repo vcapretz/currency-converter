@@ -2,7 +2,7 @@ import React from 'react';
 import { Platform, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import styled from 'styled-components/native';
-import { prop, pathOr } from 'ramda';
+import { path, pathOr } from 'ramda';
 
 import InputWithButton from '../components/InputWithButton';
 import ReverseCurrenciesButton from '../components/ReverseCurrenciesButton';
@@ -10,14 +10,14 @@ import LastConvertedText from '../components/LastConvertedText';
 import Header from '../components/Header';
 import Logo from '../components/Logo';
 
-import { currenciesSlice } from '../slices';
+import { currenciesSlice, fetchCurrencyConversions } from '../slices';
 import { useSelector, useDispatch } from 'react-redux';
 
 const StyledContainer = styled.View`
   flex: 1;
   align-items: center;
   justify-content: center;
-  background-color: #4f6d7a;
+  background-color: ${props => props.primaryColor};
 `;
 
 const StyledKeyboardAvoidingView = styled.KeyboardAvoidingView`
@@ -27,29 +27,52 @@ const StyledKeyboardAvoidingView = styled.KeyboardAvoidingView`
 export default ({ componentId }) => {
   const dispatch = useDispatch();
 
-  const baseCurrency = useSelector(prop('baseCurrency'));
-  const quoteCurrency = useSelector(prop('quoteCurrency'));
-  const amount = useSelector(prop('amount'));
+  const primaryColor = useSelector(path(['theme', 'primaryColor']));
+
+  const baseCurrency = useSelector(path(['currencies', 'baseCurrency']));
+  const quoteCurrency = useSelector(path(['currencies', 'quoteCurrency']));
+  const amount = useSelector(path(['currencies', 'amount']));
   const conversion = useSelector(state => {
     const conversionRate = pathOr(
       0,
-      ['conversions', state.baseCurrency, 'rates', state.quoteCurrency],
+      [
+        'currencies',
+        'conversions',
+        state.currencies.baseCurrency,
+        'rates',
+        state.currencies.quoteCurrency,
+      ],
       state,
     );
 
-    const date = pathOr(null, ['conversions', baseCurrency, 'date'], state);
+    const date = pathOr(
+      null,
+      ['currencies', 'conversions', baseCurrency, 'date'],
+      state,
+    );
     const lastConvertedDate = date ? new Date(date) : new Date();
 
     const isLoading = pathOr(
-      false,
-      ['conversions', state.baseCurrency, 'isFetching'],
+      true,
+      [
+        'currencies',
+        'conversions',
+        state.currencies.baseCurrency,
+        'isFetching',
+      ],
       state,
     );
 
     return { lastConvertedDate, conversionRate, isLoading };
   });
 
-  const { conversionRate, lastConvertedDate } = conversion;
+  const { conversionRate, lastConvertedDate, isLoading } = conversion;
+
+  React.useEffect(() => {
+    if (conversionRate === 0) {
+      dispatch(fetchCurrencyConversions(baseCurrency));
+    }
+  }, [baseCurrency, conversionRate, dispatch, isLoading]);
 
   const convertedAmount = conversionRate * parseFloat(amount || 0);
   const { changeCurrencyAmount, swapCurrency } = currenciesSlice.actions;
@@ -98,7 +121,7 @@ export default ({ componentId }) => {
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <StyledContainer>
+      <StyledContainer primaryColor={primaryColor}>
         <Header onRightPress={navigateToOptions} />
 
         <StyledKeyboardAvoidingView
@@ -119,7 +142,7 @@ export default ({ componentId }) => {
             onPress={() =>
               navigateToCurrencyList('Quote currency', 'quoteCurrency')
             }
-            value={convertedAmount.toFixed(2)}
+            value={isLoading ? 'Loading...' : convertedAmount.toFixed(2)}
           />
 
           <LastConvertedText
