@@ -8,7 +8,7 @@ export const currenciesSlice = createSlice({
     quoteCurrency: 'SEK',
     conversions: {
       USD: {
-        isFetching: true,
+        isFetching: false,
         base: 'USD',
         date: '2019-12-10',
         rates: {
@@ -48,13 +48,8 @@ export const currenciesSlice = createSlice({
     },
   },
   reducers: {
-    changeCurrencyAmount: {
-      reducer(state, action) {
-        state.amount = action.payload;
-      },
-      prepare(text) {
-        return { payload: parseFloat(text) };
-      },
+    changeCurrencyAmount: (state, action) => {
+      state.amount = action.payload;
     },
     swapCurrency: state => {
       const { baseCurrency, quoteCurrency } = state;
@@ -62,11 +57,19 @@ export const currenciesSlice = createSlice({
       state.baseCurrency = quoteCurrency;
       state.quoteCurrency = baseCurrency;
     },
-    setBaseCurrency: (state, action) => {
-      state.baseCurrency = action.payload;
-    },
-    setQuoteCurrency: (state, action) => {
-      state.quoteCurrency = action.payload;
+    setCurrency: (state, action) => {
+      const { currencyType, currencyValue } = action.payload;
+      const defaultConversion = {
+        isFetching: true,
+        date: '',
+        rates: {},
+      };
+
+      state[currencyType] = currencyValue;
+
+      if (!state.conversions[currencyValue]) {
+        state.conversions[currencyValue] = defaultConversion;
+      }
     },
   },
 });

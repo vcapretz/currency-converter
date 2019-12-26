@@ -6,7 +6,9 @@ import Themes from './src/screens/Themes';
 import { hoc } from './src/AppProvider';
 
 Navigation.registerComponent('navigation.Home', () => hoc(Home));
-Navigation.registerComponent('navigation.CurrencyList', () => CurrencyList);
+Navigation.registerComponent('navigation.CurrencyList', () =>
+  hoc(CurrencyList),
+);
 Navigation.registerComponent('navigation.Options', () => Options);
 Navigation.registerComponent('navigation.Themes', () => Themes);
 

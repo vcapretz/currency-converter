@@ -50,16 +50,20 @@ export default ({ componentId }) => {
   });
 
   const { conversionRate, lastConvertedDate } = conversion;
-  const convertedAmount = conversionRate * amount;
+
+  const convertedAmount = conversionRate * parseFloat(amount || 0);
   const { changeCurrencyAmount, swapCurrency } = currenciesSlice.actions;
 
-  const navigateToCurrencyList = modalTitle => () => {
+  const navigateToCurrencyList = (modalTitle, modalType) => {
     Navigation.showModal({
       stack: {
         children: [
           {
             component: {
               name: 'navigation.CurrencyList',
+              passProps: {
+                modalType,
+              },
               options: {
                 topBar: {
                   title: {
@@ -104,13 +108,17 @@ export default ({ componentId }) => {
           <InputWithButton
             currency={baseCurrency}
             onChangeText={text => dispatch(changeCurrencyAmount(text))}
-            onPress={navigateToCurrencyList('Base currency')}
+            onPress={() =>
+              navigateToCurrencyList('Base currency', 'baseCurrency')
+            }
             value={amount.toString()}
           />
           <InputWithButton
             currency={quoteCurrency}
             editable={false}
-            onPress={navigateToCurrencyList('Quote currency')}
+            onPress={() =>
+              navigateToCurrencyList('Quote currency', 'quoteCurrency')
+            }
             value={convertedAmount.toFixed(2)}
           />
 
